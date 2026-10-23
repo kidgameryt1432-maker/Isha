@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For My Cutie 💗</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+ height:100dvh;overflow:hidden;color:white;
+ font-family:"Segoe UI",sans-serif;
+ background:radial-gradient(circle at top,#65142f,#280014 55%,#080008);
+}
+#sky{position:fixed;inset:0;overflow:hidden;pointer-events:none}
+.heart{
+ position:absolute;bottom:-50px;color:#ff5b91;
+ text-shadow:0 0 14px #ff1760;
+ animation:float linear infinite;
+}
+@keyframes float{
+ 0%{transform:translateY(0) rotate(0);opacity:0}
+ 15%{opacity:.8}
+ 100%{transform:translateY(-115vh) rotate(35deg);opacity:0}
+}
+main{height:100dvh;display:flex;align-items:center;justify-content:center;
+ padding:14px;position:relative;z-index:1}
+.card{
+ width:100%;max-width:440px;height:min(690px,95dvh);
+ padding:35px 22px 25px;border:1px solid #ff9cbb55;
+ border-radius:30px;background:#ffffff0d;backdrop-filter:blur(8px);
+ box-shadow:0 0 45px #ff175022;display:flex;
+ flex-direction:column;align-items:center;justify-content:center;
+ text-align:center;gap:17px;position:relative
+}
+.tag{position:absolute;top:22px;color:#ffabc5;
+ font-size:10px;letter-spacing:2px}
+.emoji{font-size:68px;animation:bounce 1.8s infinite;
+ filter:drop-shadow(0 0 14px #ff477a66)}
+@keyframes bounce{50%{transform:translateY(-8px) rotate(4deg)}}
+h1{font-size:clamp(29px,8vw,39px);color:#ffa5bf;line-height:1.2}
+p{font-size:15px;line-height:1.75;color:#ffe6ed;max-width:350px}
+.quote{font-size:14px;color:#ffb4ca;font-style:italic;line-height:1.6}
+.buttons{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
+button{border:0;border-radius:30px;padding:13px 17px;
+ font-size:14px;font-weight:700;cursor:pointer;transition:.2s}
+button:active{transform:scale(.93)}
+.primary{background:linear-gradient(100deg,#ff2869,#ff7da5);
+ color:white;box-shadow:0 5px 20px #ff286944}
+.secondary{background:#ffffff10;color:#ffe5ed;border:1px solid #ff8cac66}
+#reply{min-height:23px;font-size:13px;color:#ffb7ce}
+#gift{font-size:55px;cursor:pointer}
+#gift:active{transform:scale(1.15)}
+@media(max-height:650px){
+ .card{height:97dvh;padding:25px 18px 15px;gap:11px}
+ .emoji{font-size:48px}h1{font-size:27px}
+ p{font-size:13px;line-height:1.55}
+}
+</style>
+</head>
+
+<body>
+<div id="sky"></div>
+<main>
+<div class="card">
+ <div class="tag">MADE WITH LOVE & A LITTLE CHAOS 💌</div>
+ <div class="emoji" id="emoji">🥹</div>
+ <h1 id="title">Hey, My Cutie!</h1>
+ <p id="text">Congratulations! 🎉 You've been selected for the extremely important position of making someone smile just by existing.</p>
+ <div class="quote" id="quote">Salary: unlimited affection. Working hours: whenever you need a hug. 🤭</div>
+ <div id="extra"></div>
+ <div class="buttons" id="buttons"></div>
+ <p id="reply"></p>
+</div>
+</main>
+
+<script>
+const scenes=[
+{
+ e:"🥹",t:"Hey, My Cutie!",p:"Congratulations! 🎉 You've been selected for the extremely important position of making someone smile just by existing.",
+ q:"Salary: unlimited affection. Working hours: whenever you need a hug. 🤭",
+ b:[["Accept the job 💗",1],["What's the salary? 😏",1]]
+},
+{
+ e:"😤",t:"I Have A Complaint!",p:"You keep appearing in my thoughts without permission. This is a serious case of cuteness overload.",
+ q:"My brain is requesting compensation. Maybe one smile? 😂",
+ b:[["No compensation 😈",2],["Fine, here's a smile 🙈",2]]
+},
+{
+ e:"🤨",t:"One Tiny Question...",p:"If I stole your hoodie, would you come to get it back or let me keep it forever?",
+ q:"Choose wisely. This is extremely scientific research. 🧪",
+ b:[["Come get it 😤",3],["You can keep it 🥹",3],["I'll steal yours too 😏",3]]
+},
+{
+ e:"🙈",t:"OHHH, YOU!",p:"Imagine me looking at you for 3 seconds, smiling, then suddenly forgetting every word in the English language.",
+ q:"Smooth? No. Adorable? Hopefully. 😭❤️",
+ b:[["Embarrassing 😂",4],["Actually cute 🥰",4]]
+},
+{
+ e:"🎁",t:"A Tiny Surprise!",p:"There's a secret gift waiting for you. Go on, tap it. I promise it's only a little bit cheesy.",
+ q:"Tap the gift below to reveal your prize!",
+ b:[["Continue 💌",5]],gift:true
+},
+{
+ e:"💋",t:"Your Reward!",p:"You have officially unlocked one virtual forehead kiss, three warm hugs, and an unlimited supply of terrible jokes.",
+ q:"Non-refundable. No exchanges. Terms & cuddles apply. 😂💗",
+ b:[["Claim my hugs 🤗",6],["I want extra kisses 😚",6]]
+},
+{
+ e:"🥰",t:"Can I Tell You Something?",p:"Jokes aside, I hope you know you don't need to be in a good mood all the time. You deserve love on your quiet days too.",
+ q:"I hope being around me feels like a safe, warm little corner of the world. ❤️",
+ b:[["Awww 🥹",7],["Stop making me blush 🙈",7]]
+},
+{
+ e:"😏",t:"Final Important Question",p:"Choose your ideal date with me. There are no wrong answers, unless you choose none. Just kidding. Mostly. 😂",
+ q:"Your choices will be remembered forever. (By me. For approximately 4 minutes.)",
+ b:[["Late-night talks 🌙",8],["Food & silly jokes 🍕",8],["Cuddles & movies 🧸",8]]
+},
+{
+ e:"💗",t:"One Last Little Thing",p:"You're cute when you're happy, precious when you're quiet, and still deserving of care when life gets messy.",
+ q:"I'm glad you exist. Now please stop being so adorable. I have a reputation to maintain. 😭❤️",
+ b:[["Read again ↻",0],["Send a hug back 🤗","hug"]]
+}
+];
+
+let i=0;
+const $=id=>document.getElementById(id);
+
+function render(){
+ const s=scenes[i];
+ $("emoji").textContent=s.e;
+ $("title").textContent=s.t;
+ $("text").textContent=s.p;
+ $("quote").textContent=s.q;
+ $("reply").textContent="";
+ $("extra").innerHTML="";
+ $("buttons").innerHTML="";
+
+ if(s.gift){
+  const gift=document.createElement("div");
+  gift.id="gift";gift.textContent="🎁";
+  gift.onclick=()=>{
+   gift.textContent="💝";
+   $("reply").textContent="SURPRISE! You're officially my favourite little troublemaker. 😚";
+   burst();
+  };
+  $("extra").appendChild(gift);
+ }
+
+ s.b.forEach(([label,target])=>{
+  const b=document.createElement("button");
+  b.textContent=label;
+  b.className=target===0||target==="hug"?"secondary":"primary";
+  b.onclick=()=>{
+   if(target==="hug"){
+    $("reply").textContent="Hug received! Sending you 100 more. 🤗❤️";
+    burst();return;
+   }
+   i=target;
+   render();burst();
+  };
+  $("buttons").appendChild(b);
+ });
+}
+function burst(){
+ for(let n=0;n<10;n++){
+  const h=document.createElement("span");
+  h.className="heart";h.textContent=Math.random()>.5?"♥":"♡";
+  h.style.left=(20+Math.random()*60)+"%";
+  h.style.fontSize=(18+Math.random()*20)+"px";
+  h.style.animationDuration="3s";
+  $("sky").appendChild(h);
+  h.addEventListener("animationend",()=>h.remove());
+ }
+}
+for(let n=0;n<28;n++){
+ const h=document.createElement("span");
+ h.className="heart";
+ h.textContent=["♥","♡","ღ","💗"][Math.floor(Math.random()*4)];
+ h.style.left=Math.random()*100+"%";
+ h.style.fontSize=(13+Math.random()*24)+"px";
+ h.style.animationDuration=(7+Math.random()*10)+"s";
+ h.style.animationDelay=(-Math.random()*12)+"s";
+ $("sky").appendChild(h);
+}
+render();
+</script>
+</body>
+</html>
